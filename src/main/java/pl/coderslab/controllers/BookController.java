@@ -2,7 +2,7 @@ package pl.coderslab.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.models.Book;
-import pl.coderslab.services.GeneralService;
+import pl.coderslab.services.BookService;
 import pl.coderslab.services.map.MockBookService;
 
 import java.util.List;
@@ -12,10 +12,10 @@ import java.util.List;
 @RequestMapping("/books")
 public class BookController {
 
-    private final GeneralService generalService;
+    private final BookService generalService;
 
 
-    public BookController(GeneralService generalService) {
+    public BookController(BookService generalService) {
         this.generalService = generalService;
     }
 
@@ -37,4 +37,18 @@ public class BookController {
         generalService.addBook(book);
     }
 
+    @RequestMapping("/{id}")
+    public Book getBook(@PathVariable String id){
+        return generalService.getBookById(Long.parseLong(id));
+    }
+
+    @PutMapping({"","/"})
+    public void updateBook(@RequestBody Book book){
+        generalService.updateBookById(book);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteBook(@PathVariable String id){
+        generalService.deleteBookById(Long.parseLong(id));
+    }
 }

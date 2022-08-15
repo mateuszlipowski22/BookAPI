@@ -1,13 +1,14 @@
 package pl.coderslab.services.map;
 import pl.coderslab.models.Book;
 import org.springframework.stereotype.Service;
-import pl.coderslab.services.GeneralService;
+import pl.coderslab.services.BookService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
-public class MockBookService implements GeneralService<Book, Long> {
+public class MockBookService implements BookService {
 
 
     private List<Book> books;
@@ -32,17 +33,19 @@ public class MockBookService implements GeneralService<Book, Long> {
 
     @Override
     public Book getBookById(Long id) {
-        return null;
+        return books.stream().filter(book -> Objects.equals(book.getId(), id)).findFirst().get();
     }
 
     @Override
-    public Book updateBookById(Long id) {
-        return null;
+    public void updateBookById(Book book) {
+        int bookPosition =books.indexOf(books.stream().filter(b-> Objects.equals(b.getId(), book.getId())).findFirst().get());
+        books.set(bookPosition, book);
     }
 
     @Override
     public void deleteBookById(Long id) {
-
+        int bookPosition =books.indexOf(books.stream().filter(b-> Objects.equals(b.getId(), id)).findFirst().get());
+        books.remove(bookPosition);
     }
 
     @Override
