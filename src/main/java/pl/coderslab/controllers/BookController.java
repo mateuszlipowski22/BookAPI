@@ -1,8 +1,11 @@
 package pl.coderslab.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.models.Book;
 import pl.coderslab.services.BookService;
+import pl.coderslab.services.UserLogger;
 import pl.coderslab.services.map.MockBookService;
 
 import java.util.List;
@@ -12,43 +15,52 @@ import java.util.List;
 @RequestMapping("/books")
 public class BookController {
 
-    private final BookService generalService;
+    private final BookService bookService;
+    private final UserLogger userLogger;
 
-
-    public BookController(BookService generalService) {
-        this.generalService = generalService;
+    @Autowired
+    public BookController(BookService generalService, UserLogger userLogger) {
+        this.bookService = generalService;
+        this.userLogger = userLogger;
     }
 
 
     @RequestMapping("/helloBook")
     public Book helloBook() {
+        userLogger.log(new Object() {}.getClass().getEnclosingMethod().getName());
         return new Book(1L, "9788324631766", "Thinking in Java",
                 "Bruce Eckel", "Helion", "programming");
     }
 
     @RequestMapping({"","/"})
     public List<Book> getBooks(){
-        return generalService.getBooksList();
+        userLogger.log(new Object() {}.getClass().getEnclosingMethod().getName());
+        return bookService.getBooksList();
     }
 
     @PostMapping({"","/"})
     public void addBooks(@RequestBody Book book){
+        userLogger.log(new Object() {}.getClass().getEnclosingMethod().getName());
         book.setId(MockBookService.getNextId());
-        generalService.addBook(book);
+        bookService.addBook(book);
     }
 
     @RequestMapping("/{id}")
     public Book getBook(@PathVariable String id){
-        return generalService.getBookById(Long.parseLong(id));
+        userLogger.log(new Object() {}.getClass().getEnclosingMethod().getName() +" id " +id);
+        return bookService.getBookById(Long.parseLong(id));
     }
 
     @PutMapping({"","/"})
     public void updateBook(@RequestBody Book book){
-        generalService.updateBookById(book);
+        userLogger.log(new Object() {}.getClass().getEnclosingMethod().getName()+" id "+book.getId().toString());
+        bookService.updateBookById(book);
     }
 
     @DeleteMapping("/{id}")
     public void deleteBook(@PathVariable String id){
-        generalService.deleteBookById(Long.parseLong(id));
+        userLogger.log(new Object() {}.getClass().getEnclosingMethod().getName()+" id " +id);
+        bookService.deleteBookById(Long.parseLong(id));
     }
+
 }

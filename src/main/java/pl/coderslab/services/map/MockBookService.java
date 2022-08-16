@@ -10,9 +10,7 @@ import java.util.Objects;
 @Service
 public class MockBookService implements BookService {
 
-
     private List<Book> books;
-
 
     public MockBookService() {
         books = new ArrayList<>();
@@ -21,6 +19,7 @@ public class MockBookService implements BookService {
                 "programming"));
         books.add(new Book(3L, "9780130819338", "Java	2.	Podstawy", "Cay	Horstmann,	Gary	Cornell", "Helion",
                 "programming"));
+        System.out.println("Initial books list loaded...");
     }
 
     private static Long nextId = 4L;
