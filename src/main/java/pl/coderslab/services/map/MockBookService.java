@@ -1,4 +1,5 @@
 package pl.coderslab.services.map;
+import org.springframework.context.annotation.Primary;
 import pl.coderslab.models.Book;
 import org.springframework.stereotype.Service;
 import pl.coderslab.services.BookService;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
+//@Primary
 public class MockBookService implements BookService {
 
     private List<Book> books;
