@@ -2,6 +2,7 @@ package pl.coderslab.services.database;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import pl.coderslab.models.Book;
 import pl.coderslab.services.BookService;
@@ -12,7 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Primary
+//@Primary
+@Profile("DB")
 public class DBBookService implements BookService {
 
     public final String INSERT_BOOK_QUERY="INSERT INTO BookAPI.books (isbn, title, author, publisher, type) VALUES (?,?,?,?,?);";
@@ -26,11 +28,11 @@ public class DBBookService implements BookService {
     @Autowired
     public DBBookService(DBUtill dbUtill) {
         this.dbUtill = dbUtill;
-        this.addBook(new Book(1L, "9788324631766", "Thiniking	in	Java", "Bruce	Eckel", "Helion", "programming"));
-        this.addBook(new Book(2L, "9788324627738", "Rusz	glowa	Java.", "Sierra	Kathy,	Bates	Bert", "Helion",
-                "programming"));
-        this.addBook(new Book(3L, "9780130819338", "Java	2.	Podstawy", "Cay	Horstmann,	Gary	Cornell", "Helion",
-                "programming"));
+//        this.addBook(new Book(1L, "9788324631766", "Thiniking	in	Java", "Bruce	Eckel", "Helion", "programming"));
+//        this.addBook(new Book(2L, "9788324627738", "Rusz	glowa	Java.", "Sierra	Kathy,	Bates	Bert", "Helion",
+//                "programming"));
+//        this.addBook(new Book(3L, "9780130819338", "Java	2.	Podstawy", "Cay	Horstmann,	Gary	Cornell", "Helion",
+//                "programming"));
         System.out.println("Initial books database loaded...");
     }
 

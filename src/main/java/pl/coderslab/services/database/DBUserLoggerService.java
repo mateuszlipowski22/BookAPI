@@ -16,7 +16,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 @Service("MySQLDBUserLogger")
-@Primary
+//@Primary
+@Profile("DB")
 public class DBUserLoggerService implements UserLogger {
 
     private final DBUtill dbUtill;

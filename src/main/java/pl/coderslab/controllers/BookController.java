@@ -33,33 +33,33 @@ public class BookController {
     }
 
     @RequestMapping({"","/"})
-    public List<Book> getBooks(){
-        userLogger.log(new Object() {}.getClass().getEnclosingMethod().getName());
+    public List<Book> getBooks(@RequestHeader("user-agent") String userAgent){
+        userLogger.log(new Object() {}.getClass().getEnclosingMethod().getName() +" " + userAgent);
         return bookService.getBooksList();
     }
 
     @PostMapping({"","/"})
-    public void addBooks(@RequestBody Book book){
-        userLogger.log(new Object() {}.getClass().getEnclosingMethod().getName());
+    public void addBooks(@RequestBody Book book, @RequestHeader("user-agent") String userAgent){
+        userLogger.log(new Object() {}.getClass().getEnclosingMethod().getName() +" " + userAgent);
         book.setId(MockBookService.getNextId());
         bookService.addBook(book);
     }
 
     @RequestMapping("/{id}")
-    public Book getBook(@PathVariable String id){
-        userLogger.log(new Object() {}.getClass().getEnclosingMethod().getName() +" id " +id);
+    public Book getBook(@PathVariable String id, @RequestHeader("user-agent") String userAgent){
+        userLogger.log(new Object() {}.getClass().getEnclosingMethod().getName() +" id " +id +" " + userAgent);
         return bookService.getBookById(Long.parseLong(id));
     }
 
     @PutMapping({"","/"})
-    public void updateBook(@RequestBody Book book){
-        userLogger.log(new Object() {}.getClass().getEnclosingMethod().getName()+" id "+book.getId().toString());
+    public void updateBook(@RequestBody Book book, @RequestHeader("user-agent") String userAgent){
+        userLogger.log(new Object() {}.getClass().getEnclosingMethod().getName()+" id "+book.getId().toString()+" " + userAgent);
         bookService.updateBookById(book);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteBook(@PathVariable String id){
-        userLogger.log(new Object() {}.getClass().getEnclosingMethod().getName()+" id " +id);
+    public void deleteBook(@PathVariable String id, @RequestHeader("user-agent") String userAgent){
+        userLogger.log(new Object() {}.getClass().getEnclosingMethod().getName()+" id " + id+" " + userAgent);
         bookService.deleteBookById(Long.parseLong(id));
     }
 

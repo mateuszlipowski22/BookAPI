@@ -12,6 +12,7 @@ import java.util.List;
 
 @Service
 //@Primary
+@Profile("List")
 public class UserLoggerService implements UserLogger {
 
     private List<String> logList=new ArrayList<>();
